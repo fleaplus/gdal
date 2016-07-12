@@ -41,8 +41,8 @@
 # 1200 = 6.0
 #
 !IFNDEF MSVC_VER
-#assume msvc VS2008.
-MSVC_VER=1500
+#assume msvc VS2013.
+MSVC_VER=1800
 !ENDIF
 
 ###############################################################################
@@ -58,7 +58,7 @@ MSVC_VER=1500
 # But the paths *should* be absolute (relative paths mess up in submakefiles).
 
 !IFNDEF GDAL_HOME
-GDAL_HOME = "C:\warmerda\bld"
+GDAL_HOME = "C:\gdal\build"
 !ENDIF
 !IFNDEF BINDIR
 BINDIR = $(GDAL_HOME)\bin
@@ -124,18 +124,28 @@ CXX_PDB_FLAGS=/Zi /Fd$(GDAL_ROOT)\gdal$(VERSION).pdb
 CXX_PDB_FLAGS=
 !ENDIF
 
+#
+# Uncommment this line to build a statically linkable gdal lib.
+BUILDSTATIC=1
+
+!IFDEF BUILDSTATIC
+CXX_STATIC_LINK_FLAGS=/MT
+!ELSE
+CXX_STATIC_LINK_FLAGS=/MD
+!ENDIF
+
 !IFNDEF OPTFLAGS
 !IF $(MSVC_VER) >= 1400
 !IFNDEF DEBUG
-OPTFLAGS= $(CXX_ANALYZE_FLAGS) $(CXX_PDB_FLAGS) /nologo /MD /EHsc /Ox /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DNDEBUG
+OPTFLAGS= $(CXX_ANALYZE_FLAGS) $(CXX_PDB_FLAGS) /nologo $(CXX_STATIC_LINK_FLAGS) /EHsc /Ox /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DNDEBUG
 !ELSE
-OPTFLAGS= $(CXX_ANALYZE_FLAGS) $(CXX_PDB_FLAGS) /nologo /MD /EHsc /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DDEBUG
+OPTFLAGS= $(CXX_ANALYZE_FLAGS) $(CXX_PDB_FLAGS) /nologo $(CXX_STATIC_LINK_FLAGS) /EHsc /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DDEBUG
 !ENDIF
 !ELSE
 !IFNDEF DEBUG
-OPTFLAGS= $(CXX_PDB_FLAGS) /nologo /MD /EHsc /GR /Ox /DNDEBUG
+OPTFLAGS= $(CXX_PDB_FLAGS) /nologo $(CXX_STATIC_LINK_FLAGS) /EHsc /GR /Ox /DNDEBUG
 !ELSE
-OPTFLAGS= $(CXX_PDB_FLAGS) /nologo /MD /EHsc /GR /DDEBUG
+OPTFLAGS= $(CXX_PDB_FLAGS) /nologo $(CXX_STATIC_LINK_FLAGS) /EHsc /GR /DDEBUG
 !ENDIF
 !ENDIF  #MSVC_VER
 !ENDIF  # OPTFLAGS
@@ -168,7 +178,7 @@ LDEBUG= /debug
 # Uncomment the following if you are building for 64-bit windows
 # (x64). You'll need to have PATH, INCLUDE and LIB set up for 64-bit
 # compiles.
-#WIN64=YES
+WIN64=YES
 
 # If you don't want some entry points to have STDCALL conventions, 
 # comment out the following and add -DCPL_DISABLE_STDCALL in OPTFLAGS.
@@ -186,7 +196,7 @@ PAM_SETTING=-DPAM_ENABLED
 
 # Uncomment the following to link OGR utilities against main GDAL DLL
 # instead of statically linking against OGR libraries.
-DLLBUILD=1
+# DLLBUILD=1
 
 # Enable all OGR formats, or only raster formats?  Comment out to disable
 # vector formats. 
@@ -221,17 +231,17 @@ ODBC_SUPPORTED = 1
 JPEG_SUPPORTED = 1
 
 # This will enable 12bit libjpeg - use only with internal jpeg builds.
-JPEG12_SUPPORTED = 1
+JPEG12_SUPPORTED = 0
 
 #if using an external jpeg library uncomment the follwing lines
-#JPEG_EXTERNAL_LIB = 1
-#JPEGDIR = c:/projects/jpeg-6b
-#JPEG_LIB = $(JPEGDIR)/libjpeg.lib
+JPEG_EXTERNAL_LIB = 1
+JPEGDIR = C:\opencv\opencv\3rdparty\libjpeg
+JPEG_LIB = C:\opencv\build\install\x64\vc12\staticlib\libjpeg.lib
 
 #if using an external png library uncomment the follwing lines
-#PNG_EXTERNAL_LIB = 1
-#PNGDIR = c:/projects/libpng-1.0.8
-#PNG_LIB = $(PNGDIR)/libpng.lib
+PNG_EXTERNAL_LIB = 1
+PNGDIR = C:\opencv\opencv\3rdparty\libpng
+PNG_LIB = C:\opencv\build\install\x64\vc12\staticlib\libpng.lib
 
 # if using an external libtiff library
 #TIFF_INC =	-Ic:/warmerda/libtiff/libtiff
