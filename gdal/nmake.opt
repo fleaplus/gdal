@@ -236,23 +236,23 @@ JPEG12_SUPPORTED = 0
 #if using an external jpeg library uncomment the follwing lines
 JPEG_EXTERNAL_LIB = 1
 JPEGDIR = C:\opencv\opencv\3rdparty\libjpeg
-JPEG_LIB = C:\opencv\build\install\x64\vc12\staticlib\libjpeg.lib
+JPEG_LIB = C:\opencv\build\3rdparty\lib\Release\libjpeg.lib
 
 #if using an external png library uncomment the follwing lines
 PNG_EXTERNAL_LIB = 1
 PNGDIR = C:\opencv\opencv\3rdparty\libpng
-PNG_LIB = C:\opencv\build\install\x64\vc12\staticlib\libpng.lib
+PNG_LIB = C:\opencv\build\3rdparty\lib\Release\libpng.lib
 
 # if using an external libtiff library
-#TIFF_INC =	-Ic:/warmerda/libtiff/libtiff
-#TIFF_LIB =	c:/warmerda/libtiff/libtiff/libtiff_i.lib
+TIFF_INC =	-Ic:/libtiff/libtiff
+TIFF_LIB =	c:/libtiff/libtiff/libtiff.lib
 # uncomment following line, if you have libtiff version >= 4.0 to
 # enable BigTIFF support
-#TIFF_OPTS=	-DBIGTIFF_SUPPORT
+TIFF_OPTS =	-DBIGTIFF_SUPPORT
 
 # if using an external libgeotiff library
-#GEOTIFF_INC =   -Ic:/warmerda/libgeotiff -Ic:/warmerda/libgeotiff/libxtiff
-#GEOTIFF_LIB =   C:/warmerda/libgeotiff/geotiff_i.lib
+GEOTIFF_INC =   -Ic:/libgeotiff -Ic:/libgeotiff/libxtiff
+GEOTIFF_LIB =   C:/libgeotiff/geotiff.lib
 
 # Uncomment out the following lines to enable LibKML support.
 #LIBKML_DIR = C:/Dev/libkml
@@ -412,8 +412,8 @@ INGRES_LIB = "$(INGRES_HOME)\lib\iilibapi.lib" \
 
 
 # SQLite Libraries
-#SQLITE_INC=-IN:\pkg\sqlite-win32
-#SQLITE_LIB=N:\pkg\sqlite-win32\sqlite3_i.lib
+SQLITE_INC=-IC:\sqlite
+SQLITE_LIB=C:\sqlite\sqlite3.lib
 # For spatialite support, try this instead (assuming you grab the libspatialite-amalgamation-2.3.1 and installed it in osgeo4w):
 # The -DSPATIALITE_AMALGAMATION, which cause "spatialite/sqlite3.h" to be included instead of "sqlite3.h" might not be necessary
 # depending on the layout of the include directories. In case of compilation errors, remove it.
