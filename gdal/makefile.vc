@@ -65,7 +65,7 @@ default:	port_dir ogr_dir core_dir frmts_dir $(VB6_TARGET) $(GDAL_DLL) \
 
 staticlib:
 	if exist gdal.lib del gdal.lib
-	lib /nologo /out:gdal.lib $(LIBOBJ)
+	lib /nologo /out:gdal.lib $(LIBOBJ) $(SQLITE_LIB) $(GEOTIFF_LIB) $(ODBCLIB)
 
 target-lib: port_dir ogr_dir core_dir frmts_dir dll
 
